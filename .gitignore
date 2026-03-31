@@ -10,3 +10,4 @@ brainly-backend/.env
 brainly-frontend/node_modules
 brainly-frontend/dist
 brainly-frontend/.env
+brainly-backend/readme.md
