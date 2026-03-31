@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+.env
+.DS_Store
+.vscode
+brainly-backend/node_modules
+brainly-backend/dist
+brainly-backend/.env
+brainly-frontend/node_modules
+brainly-frontend/dist
+brainly-frontend/.env
