@@ -95,27 +95,74 @@ app.delete("/api/v1/content",UserMiddleware,async(req,res)=>{
 
 
 })
-app.post("/api/v1/brain/share",UserMiddleware,(req,res)=>{
+app.post("/api/v1/brain/share",UserMiddleware,async(req,res)=>{
     const share = req.body.share;
     if(share){
-        linkModel.create({
+        const existingLink = await linkModel.findOne({
+            //@ts-ignore
+            userId:req.userId
+        });
+        if(existingLink){
+            res.json({
+                hash:existingLink.hash
+            })
+            return;
+        }
+        const hash = random(10);
+        await linkModel.create({
+            
             //@ts-ignore
             userId:req.userId,
-            hash:random(10)
+            hash:hash
 
         })
+
+        res.json({
+            message:"/share/" + hash
+        })
+
     } else{
         linkModel.deleteOne({
             //@ts-ignore
             userId:req.userId
         });
+        res.json({
+            message:"removed link"
+        })
     }
-    res.json({
-        message:"updated sharable link"
-    })
+    
 
 })
-app.post("/api/v1/brain/:shareLink",(req,res)=>{
+app.get("/api/v1/brain/:shareLink",async(req,res)=>{
+    const hash = req.params.shareLink;
+
+    const link = await linkModel.findOne({
+        hash
+    })
+    if(!link){
+        res.status(403).json({
+            message:"sorry incorrect input"
+        })
+        return;
+    }
+    const content = await contentModel.find({
+        userId:link.userId
+    })
+    const user = await userModel.findOne({
+        _id:link.userId
+    })
+
+    if(!user){
+        res.status(401).json({
+            message:"user not found"
+        })
+        return;
+    }
+    res.json({
+        username:user?.username,
+        content:content
+    })
+
 
 })
 
