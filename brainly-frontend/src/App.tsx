@@ -1,18 +1,18 @@
 import React from 'react'
-import { Button } from '../../brainly-frontend/src/components/Button'
-import { PlusIcon } from './icons/PlusIcon'
-import { ShareIcon } from './icons/ShareIcon'
 
+import { Signin } from './pages/Signin'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Signup } from './pages/Signup'
+import Dashboard from './pages/Dashboard'
 
 const App = () => {
-  return (
-    <div>
-      
-      <Button startIcon={<ShareIcon size='md'/>} variant='primary' text='Share' size='sm'/>
-      <Button  startIcon={<PlusIcon size='md'/>} variant='secondary' text='Add Content' size='md'/>
-      
-    </div>
-  )
+  return <BrowserRouter>
+           <Routes>
+              <Route path='/' element={<Signup/>}></Route>
+              <Route path='/signin' element={<Signin/>}></Route>
+              <Route path='/dashboard' element={<Dashboard/>}></Route>
+            </Routes>
+          </BrowserRouter>
 }
 
 export default App

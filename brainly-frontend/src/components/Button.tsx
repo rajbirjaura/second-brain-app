@@ -5,6 +5,8 @@ export interface ButtonProps{
     startIcon?:any;
     endIcon?:any;
     onClick: ()=>void;
+    FullWidth?:boolean;
+    loading?:boolean;
 
 }
 const sizeStyles = {
@@ -17,11 +19,15 @@ const variantStyles ={
     "secondary":"bg-red-300 text-black"
 
 }
-const defaultStyles ="rounded-md flex"
+const defaultStyles ="rounded-md flex items-center  p-3"
 
 
 export const Button = (props:ButtonProps)=>{
-    return <button className={`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]}`}>{props.startIcon? <div className="pr-3">{props.startIcon}</div>:null}{props.text}{props.endIcon}</button>
+    return <button onClick={props.onClick} className={`${props.FullWidth ? " w-full flex justify-center items-center":""}
+     ${variantStyles[props.variant]}
+      ${defaultStyles}
+       ${sizeStyles[props.size]}
+        ${props.loading ? "opacity-45 cursor-not-allowed":" cursor-pointer"}`} disabled={props.loading} >{props.startIcon? <div className="pr-2">{props.startIcon}</div>:null}{props.text}{props.endIcon}</button>
 }
 
 <Button variant="primary" size="md" onClick={()=>{}} text={"asd"}/>
